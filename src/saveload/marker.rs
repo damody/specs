@@ -323,7 +323,7 @@ pub trait MarkerAllocator<M: Marker>: Resource {
         entities: &EntitiesRes,
     ) -> Entity {
         if let Some(entity) = self.retrieve_entity_internal(marker.id()) {
-            if let Some(mut marker_comp) = storage.get_mut(entity) {
+            if let Some(marker_comp) = storage.get_mut(entity) {
                 marker_comp.update(marker);
 
                 return entity;

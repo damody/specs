@@ -23,17 +23,17 @@ travis-ci = { repository = "slide-rs/specs" }
 
 [dependencies]
 crossbeam-queue = "0.3"
-hashbrown = "0.11"
-hibitset = { version = "0.6.3", default-features = false }
+hashbrown = "0.12"
+hibitset = { path = "../hibitset", default-features = false }
 log = "0.4.8"
 shred = { version = "0.12", default-features = false }
 shrev = "1.1.1"
-tuple_utils = "0.3.0"
+tuple_utils = "0.4.0"
 
 rayon = { version = "1.5.1", optional = true }
 serde = { version = "1.0.104", optional = true, features = ["serde_derive"] }
 specs-derive = { version = "0.4.1", path = "specs-derive", optional = true }
-uuid = { version = "0.8.1", optional = true, features = ["v4", "serde"] }
+uuid = { version = "1.0", optional = true, features = ["v4", "serde"] }
 
 [features]
 default = ["parallel"]
@@ -51,9 +51,9 @@ shred-derive = ["shred/shred-derive"]
 features = ["parallel", "serde", "shred-derive", "specs-derive", "uuid_entity", "storage-event-control"]
 
 [dev-dependencies]
-nalgebra = "0.24"
+nalgebra = "0.31"
 criterion = "0.3.1"
-ron = "0.5.1"
+ron = "0.7"
 rand = "0.8"
 serde_json = "1.0.48"
 shred = { version = "0.12.0", default-features = false, features = ["shred-derive"] }
