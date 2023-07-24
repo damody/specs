@@ -3,7 +3,7 @@ use std::{
     num::NonZeroI32,
     sync::atomic::{AtomicUsize, Ordering},
 };
-
+use serde::{Deserialize, Serialize};
 use hibitset::{AtomicBitSet, BitSet, BitSetOr};
 use shred::Read;
 
@@ -219,12 +219,11 @@ impl<'a> Iterator for CreateIterAtomic<'a> {
 }
 
 /// `Entity` type, as seen by the user.
-#[derive(Clone, Copy, Debug, Hash, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, Hash, Eq, Ord, PartialEq, PartialOrd, Deserialize, Serialize)]
 pub struct Entity(Index, Generation);
 
 impl Entity {
     /// Creates a new entity (externally from ECS).
-    #[cfg(test)]
     pub fn new(index: Index, gen: Generation) -> Self {
         Self(index, gen)
     }
@@ -372,7 +371,7 @@ impl<'a> Drop for EntityResBuilder<'a> {
 /// Index generation. When a new entity is placed at an old index,
 /// it bumps the `Generation` by 1. This allows to avoid using components
 /// from the entities that were deleted.
-#[derive(Clone, Copy, Hash, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Hash, Eq, Ord, PartialEq, PartialOrd, Deserialize, Serialize)]
 pub struct Generation(NonZeroI32);
 
 // Show the inner value as i32 instead of u32.
@@ -386,8 +385,7 @@ impl Generation {
     pub(crate) fn one() -> Self {
         Generation(unsafe { NonZeroI32::new_unchecked(1) })
     }
-
-    #[cfg(test)]
+    /// for test use
     pub fn new(v: i32) -> Self {
         Generation(NonZeroI32::new(v).expect("generation id must be non-zero"))
     }

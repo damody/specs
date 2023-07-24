@@ -168,7 +168,7 @@ where
         Ok(data)
     }
 }
-
+/*
 impl<M> ConvertSaveload<M> for Entity
 where
     M: Serialize + DeserializeOwned,
@@ -190,3 +190,4 @@ where
         Ok(func(data).unwrap())
     }
 }
+ */
