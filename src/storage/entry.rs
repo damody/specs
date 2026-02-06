@@ -147,7 +147,7 @@ where
         // This is HACK. See implementation of Join for &'a mut Storage<'e, T, D> for
         // details why it is necessary.
         let storage: *mut Storage<'b, T, D> = *value as *mut Storage<'b, T, D>;
-        if (*storage).data.mask.contains(id) {
+        if (&(*storage).data).mask.contains(id) {
             StorageEntry::Occupied(OccupiedEntry {
                 id,
                 storage: &mut *storage,

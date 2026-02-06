@@ -171,7 +171,7 @@ where
     /// default.
     pub fn restrict<'rf>(
         &'rf self,
-    ) -> RestrictedStorage<'rf, 'st, T, &T::Storage, &BitSet, ImmutableParallelRestriction> {
+    ) -> RestrictedStorage<'rf, 'st, T, &'rf T::Storage, &'rf BitSet, ImmutableParallelRestriction> {
         RestrictedStorage {
             bitset: &self.data.mask,
             data: &self.data.inner,
@@ -191,7 +191,7 @@ where
     /// invalidating the bitset for iteration in `Join`.
     pub fn restrict_mut<'rf>(
         &'rf mut self,
-    ) -> RestrictedStorage<'rf, 'st, T, &mut T::Storage, &BitSet, SequentialRestriction> {
+    ) -> RestrictedStorage<'rf, 'st, T, &'rf mut T::Storage, &'rf BitSet, SequentialRestriction> {
         let (mask, data) = self.data.open_mut();
         RestrictedStorage {
             bitset: mask,
@@ -206,7 +206,7 @@ where
     /// aside from the current iteration.
     pub fn par_restrict_mut<'rf>(
         &'rf mut self,
-    ) -> RestrictedStorage<'rf, 'st, T, &mut T::Storage, &BitSet, MutableParallelRestriction> {
+    ) -> RestrictedStorage<'rf, 'st, T, &'rf mut T::Storage, &'rf BitSet, MutableParallelRestriction> {
         let (mask, data) = self.data.open_mut();
         RestrictedStorage {
             bitset: mask,

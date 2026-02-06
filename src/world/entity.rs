@@ -279,7 +279,7 @@ impl EntitiesRes {
     /// new entities atomically.
     /// They will be persistent as soon
     /// as you call `World::maintain`.
-    pub fn create_iter(&self) -> CreateIterAtomic {
+    pub fn create_iter(&self) -> CreateIterAtomic<'_> {
         CreateIterAtomic(&self.alloc)
     }
 
@@ -287,7 +287,7 @@ impl EntitiesRes {
     /// creates an entity atomically, and then returns a
     /// builder which can be used to insert components into
     /// various storages if available.
-    pub fn build_entity(&self) -> EntityResBuilder {
+    pub fn build_entity(&self) -> EntityResBuilder<'_> {
         let entity = self.create();
         EntityResBuilder {
             entity,
