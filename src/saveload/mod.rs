@@ -168,24 +168,5 @@ where
     }
 }
 
-impl<M> ConvertSaveload<M> for Entity
-where
-    M: Serialize + DeserializeOwned,
-{
-    type Data = M;
-    type Error = Infallible;
-
-    fn convert_into<F>(&self, mut func: F) -> Result<Self::Data, Self::Error>
-    where
-        F: FnMut(Entity) -> Option<M>,
-    {
-        Ok(func(*self).unwrap())
-    }
-
-    fn convert_from<F>(data: Self::Data, mut func: F) -> Result<Self, Self::Error>
-    where
-        F: FnMut(M) -> Option<Entity>,
-    {
-        Ok(func(data).unwrap())
-    }
-}
+// Note: Entity now implements Serialize/Deserialize directly,
+// so it is covered by the blanket impl above.

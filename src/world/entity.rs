@@ -232,9 +232,30 @@ impl<'a> Iterator for CreateIterAtomic<'a> {
 #[derive(Clone, Copy, Debug, Hash, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Entity(Index, Generation);
 
+#[cfg(feature = "serde")]
+impl serde::Serialize for Entity {
+    fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        use serde::ser::SerializeTuple;
+        let mut tup = serializer.serialize_tuple(2)?;
+        tup.serialize_element(&self.0)?;
+        tup.serialize_element(&self.1.id())?;
+        tup.end()
+    }
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Entity {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let (index, gen): (Index, i32) = serde::Deserialize::deserialize(deserializer)?;
+        let generation = Generation(
+            NonZeroI32::new(gen).ok_or_else(|| serde::de::Error::custom("generation id must be non-zero"))?
+        );
+        Ok(Entity(index, generation))
+    }
+}
+
 impl Entity {
     /// Creates a new entity (externally from ECS).
-    #[cfg(test)]
     pub fn new(index: Index, gen: Generation) -> Self {
         Self(index, gen)
     }
@@ -445,7 +466,6 @@ impl Generation {
         Generation(unsafe { NonZeroI32::new_unchecked(1) })
     }
 
-    #[cfg(test)]
     pub fn new(v: i32) -> Self {
         Generation(NonZeroI32::new(v).expect("generation id must be non-zero"))
     }
