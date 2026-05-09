@@ -248,7 +248,8 @@ impl<'de> serde::Deserialize<'de> for Entity {
     fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let (index, gen): (Index, i32) = serde::Deserialize::deserialize(deserializer)?;
         let generation = Generation(
-            NonZeroI32::new(gen).ok_or_else(|| serde::de::Error::custom("generation id must be non-zero"))?
+            NonZeroI32::new(gen)
+                .ok_or_else(|| serde::de::Error::custom("generation id must be non-zero"))?,
         );
         Ok(Entity(index, generation))
     }

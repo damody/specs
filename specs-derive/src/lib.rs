@@ -14,8 +14,8 @@ extern crate syn;
 
 use proc_macro::TokenStream;
 use syn::{
-    parse::{Parse, ParseStream, Result},
     DeriveInput, Path, PathArguments,
+    parse::{Parse, ParseStream, Result},
 };
 
 mod impl_saveload;

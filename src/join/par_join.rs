@@ -1,7 +1,7 @@
 use hibitset::{BitProducer, BitSetLike};
 use rayon::iter::{
-    plumbing::{bridge_unindexed, Folder, UnindexedConsumer, UnindexedProducer},
     ParallelIterator,
+    plumbing::{Folder, UnindexedConsumer, UnindexedProducer, bridge_unindexed},
 };
 
 use crate::world::Index;

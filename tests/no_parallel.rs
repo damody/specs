@@ -2,7 +2,7 @@
 
 use std::rc::Rc;
 
-use specs::{storage::VecStorage, Builder, Component, World, WorldExt};
+use specs::{Builder, Component, World, WorldExt, storage::VecStorage};
 
 #[derive(PartialEq)]
 struct CompNonSend(Rc<u32>);

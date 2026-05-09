@@ -132,7 +132,7 @@ mod test {
     use std::{convert::AsMut, fmt::Debug};
 
     use super::*;
-    use crate::{world::Builder, World};
+    use crate::{World, world::Builder};
 
     #[derive(PartialEq, Eq, Debug, Default)]
     struct CMarker;
